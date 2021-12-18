@@ -6,6 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Register from './components/Register';
+import Login from './components/Login';
+import Logout from './components/Logout';
 
 const Routing = () => {
   return (
@@ -13,6 +16,9 @@ const Routing = () => {
       <Header />
         <Routes>
             <Route path='/' element={<App />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/logout' element={<Logout />} />
         </Routes>
         <Footer />
     </Router>
@@ -30,4 +36,3 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
- 
