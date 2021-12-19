@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     cardMedia: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 const Posts = (props) => {
     const { posts } = props;
     const classes = useStyles();
-    if (!posts || posts.length === 0) return <p>Can not find any posts, sorry</p>;
+    if (!posts || posts.length === 0 || posts.detail) return <p>Can not find any posts, sorry</p>;
     return (
         <React.Fragment>
             <Container maxWidth="md" component="main">
@@ -47,11 +48,17 @@ const Posts = (props) => {
                             // Enterprise card is full width at sm breakpoint
                             <Grid item key={post.id} xs={12} md={4}>
                                 <Card className={classes.card}>
-                                    <CardMedia
-                                        className={classes.cardMedia}
-                                        image="https://source.unsplash.com/random"
-                                        title="Image title"
-                                    />
+                                    <Link
+                                        color="textPrimary"
+                                        to={`/post/${post.slug}`}
+                                        className={classes.link}
+                                    >
+                                        <CardMedia
+                                            className={classes.cardMedia}
+                                            image="https://source.unsplash.com/random"
+                                            title="Image title"
+                                        />
+                                    </Link>
                                     <CardContent className={classes.cardContent}>
                                         <Typography
                                             gutterBottom

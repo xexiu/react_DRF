@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Register from './components/Register';
 import Login from './components/Login';
 import Logout from './components/Logout';
+import Post from './components/Post';
 
 const Routing = () => {
   return (
@@ -19,6 +20,7 @@ const Routing = () => {
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
             <Route path='/logout' element={<Logout />} />
+            <Route path="/post/:slug" element={<Post />} />
         </Routes>
         <Footer />
     </Router>
