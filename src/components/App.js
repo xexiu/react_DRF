@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import axiosInstance from '../axios';
 import '../css/App.css';
-import Posts from './Posts';
 import PostLoadingComponent from './PostLoading';
+import Posts from './Posts';
 
 function App() {
 	const PostLoading = PostLoadingComponent(Posts);
@@ -11,13 +12,11 @@ function App() {
 	});
 
 	useEffect(() => {
-		setAppState({ loading: true });
-		const apiUrl = `http://127.0.0.1:8000/api/`;
-		fetch(apiUrl)
-			.then((data) => data.json())
-			.then((posts) => {
-				setAppState({ loading: false, posts: posts });
-			});
+		axiosInstance.get().then((res) => {
+			const allPosts = res.data;
+			setAppState({ loading: false, posts: allPosts });
+			console.log(res.data);
+		});
 	}, [setAppState]);
 	return (
 		<div className="App">
