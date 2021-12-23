@@ -10,6 +10,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Post from './components/Post';
+import Search from './components/Search';
 
 const Routing = () => {
   return (
@@ -21,6 +22,7 @@ const Routing = () => {
             <Route path='/login' element={<Login />} />
             <Route path='/logout' element={<Logout />} />
             <Route path="/post/:id/:slug" element={<Post />} />
+            <Route path="/search" element={<Search />} />
         </Routes>
         <Footer />
     </Router>

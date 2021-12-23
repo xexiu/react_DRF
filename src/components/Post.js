@@ -23,7 +23,7 @@ export default function Post() {
     const [data, setData] = useState({ posts: [] });
 
     useEffect(() => {
-        axiosInstance.get(id).then((res) => {
+        axiosInstance.get(`post/${id}`).then((res) => {
             setData({ posts: res.data });
             console.log(res.data);
         });
