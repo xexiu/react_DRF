@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import axiosInstance from '../axios';
+import axiosInstance from '../../axios';
 import { useNavigate } from 'react-router-dom';
-import LocalStorageServices from '../services/LocalStorageService';
+import LocalStorageServices from '../../services/LocalStorageService';
 
 export default function SignUp() {
 	const navigate = useNavigate();
