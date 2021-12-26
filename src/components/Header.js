@@ -25,6 +25,7 @@ function Header() {
 	const classes = useStyles();
 	const navigate = useNavigate();
 	const [data, setData] = useState({ search: '' });
+	const user = JSON.parse(localStorage.getItem('user'));
 
 	const goSearch = (e) => {
 		navigate({
@@ -64,7 +65,7 @@ function Header() {
 						onChange={(newValue) => setData({ search: newValue })}
 						onRequestSearch={() => goSearch(data.search)}
 					/>
-					<nav>
+					{!user && <><nav>
 						<Link
 							color="textPrimary"
 							href="#"
@@ -74,8 +75,7 @@ function Header() {
 						>
 							Register
 						</Link>
-					</nav>
-					<Button
+					</nav><Button
 						href="#"
 						color="primary"
 						variant="outlined"
@@ -83,8 +83,8 @@ function Header() {
 						component={NavLink}
 						to="/login"
 					>
-						Login
-					</Button>
+							Login
+						</Button></>}
 					<Button
 						href="#"
 						color="primary"

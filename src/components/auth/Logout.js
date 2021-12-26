@@ -10,7 +10,7 @@ export default function SignUp() {
 		axiosInstance.post('user/logout/blacklist/', {
 			refresh_token: localStorage.getItem('refresh_token'),
 		});
-		LocalStorageServices.removeItems(['access_token', 'refresh_token']);
+		LocalStorageServices.removeItems(['access_token', 'refresh_token', 'user']);
 		axiosInstance.defaults.headers['Authorization'] = null;
 		navigate('/login');
 	});

@@ -31,7 +31,28 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function buildFormData(formData, data, parentKey) {
+    if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File)) {
+        Object.keys(data).forEach(key => {
+            buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key);
+        });
+    } else {
+        const value = data == null ? '' : data;
+
+        formData.append(parentKey, value);
+    }
+}
+
+function jsonToFormData(data) {
+    const formData = new FormData();
+
+    buildFormData(formData, data);
+
+    return formData;
+}
+
 export default function Create() {
+    const user = JSON.parse(localStorage.getItem('user'));
     function slugify(string) {
         const a =
             'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;';
@@ -60,9 +81,15 @@ export default function Create() {
     });
 
     const [formData, updateFormData] = useState(initialFormData);
+    const [postimage, setPostImage] = useState(null);
 
     const handleChange = (e) => {
-        if ([e.target.name] === 'title') {
+        if (e.target.name === 'image') {
+            setPostImage({
+                image: e.target.files,
+            });
+            console.log(e.target.files);
+        } else if (e.target.name === 'title') {
             updateFormData({
                 ...formData,
                 // Trimming any whitespace
@@ -79,15 +106,20 @@ export default function Create() {
     };
 
     const createPost = async () => {
+        const post = jsonToFormData({
+            title: formData.title,
+            slug: formData.slug,
+            author: (user && user.id) || 1,
+            excerpt: formData.excerpt,
+            content: formData.content,
+            image: postimage.image[0]
+        });
+
+        debugger;
+
         try {
             const resp = await axiosInstance
-                .post(`admin/create/`, {
-                    title: formData.title,
-                    slug: formData.slug,
-                    author: 1,
-                    excerpt: formData.excerpt,
-                    content: formData.content,
-                });
+                .post(`admin/create/`, post);
             return resp;
         } catch (e) {
             console.log('There has been an error creating Post: ', e);
@@ -98,6 +130,7 @@ export default function Create() {
         e.preventDefault();
         await createPost();
         navigate('/admin/');
+        window.location.reload();
     };
 
     const classes = useStyles();
@@ -165,6 +198,14 @@ export default function Create() {
                                 rows={4}
                             />
                         </Grid>
+                        <input
+                            accept="image/*"
+                            className={classes.input}
+                            id="post-image"
+                            onChange={handleChange}
+                            name="image"
+                            type="file"
+                        />
                     </Grid>
                     <Button
                         type="submit"
